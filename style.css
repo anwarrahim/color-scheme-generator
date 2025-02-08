@@ -1,0 +1,20 @@
+html, body{
+    height: 100%;
+    margin: 0;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+main{
+    border: 2px solid rgb(157, 28, 28);
+    width: 30%; /*390px*/
+    height: 80%; /*390px*/
+    margin: 0 auto;
+}
