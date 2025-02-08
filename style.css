@@ -18,3 +18,9 @@ main{
     height: 80%; /*390px*/
     margin: 0 auto;
 }
+
+.main-body-header{
+    height: 40px;
+    width: 100%;
+    background-color: #1F2937;
+}
