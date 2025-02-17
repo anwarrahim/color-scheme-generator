@@ -791,9 +791,6 @@
   .min-h-screen {
     min-height: 100vh;
   }
-  .w-1 {
-    width: calc(var(--spacing) * 1);
-  }
   .w-1\/2 {
     width: calc(1/2 * 100%);
   }
@@ -1643,6 +1640,10 @@
     --tw-leading: 1;
     line-height: 1;
   }
+  .font-bold {
+    --tw-font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-bold);
+  }
   .text-balance {
     text-wrap: balance;
   }
@@ -1716,8 +1717,8 @@
   .\[color\:red\]\/50\! {
     color: color-mix(in oklab, red 50%, transparent) !important;
   }
-  .text-blue-300 {
-    color: var(--color-blue-300);
+  .text-blue-400 {
+    color: var(--color-blue-400);
   }
   .capitalize {
     text-transform: capitalize;
@@ -2287,6 +2288,10 @@
   initial-value: 0;
 }
 @property --tw-leading {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-font-weight {
   syntax: "*";
   inherits: false;
 }
