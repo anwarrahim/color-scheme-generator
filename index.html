@@ -6,21 +6,108 @@
     <link rel="stylesheet" href="./src/output.css">
     <title>Color Scheme Generator</title>
 </head>
-<body>
-    
-    <div class="flex justify-center items-center min-h-screen bg-black">
-        <!-- color board -->
-         <div class="bg-gray-800">
-            <div class="flex flex-row"> 
-                <div>&</div>
-                <div>&</div>
-                <div>&</div>
+<body class="bg-slate-900">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-4xl p-6">
+            <!-- Header -->
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-white mb-2">Color Scheme Generator</h1>
+                <p class="text-gray-400">Generate beautiful color combinations for your projects</p>
             </div>
-            <div> 2</div>
-            <div> 3</div>
-         </div>
+
+            <!-- Color Controls -->
+            <div class="flex flex-col md:flex-row gap-6 mb-8">
+                <!-- Color Picker Section -->
+                <div class="flex-1">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Base Color</label>
+                        <div class="flex gap-4">
+                            <input type="color" id="colorPicker"
+                                class="h-12 w-20 bg-transparent rounded cursor-pointer">
+                            <input type="text" id="colorHex"
+                                class="flex-1 bg-gray-700 text-white px-4 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                placeholder="#000000">
+                        </div>
+                    </div>
+
+                    <!-- Scheme Type Selector -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Scheme Type</label>
+                        <select id="schemeType"
+                            class="w-full bg-gray-700 text-white px-4 py-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="analogous">Analogous</option>
+                            <option value="monochromatic">Monochromatic</option>
+                            <option value="triadic">Triadic</option>
+                            <option value="complementary">Complementary</option>
+                            <option value="split-complementary">Split Complementary</option>
+                        </select>
+                    </div>
+
+                    <!-- Generate Button -->
+                    <button id="generateBtn"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors">
+                        Generate Scheme
+                    </button>
+                </div>
+
+                <!-- Color Palette Display -->
+                <div class="flex-1">
+                    <div class="grid grid-cols-5 gap-2 h-full">
+                        <!-- Color Swatches will be generated dynamically -->
+                        <div class="color-swatch aspect-square rounded-lg shadow-lg bg-gray-700 flex flex-col">
+                            <div class="flex-1"></div>
+                            <div class="p-2 text-xs text-gray-300 bg-black bg-opacity-30">#000000</div>
+                        </div>
+                        <div class="color-swatch aspect-square rounded-lg shadow-lg bg-gray-700 flex flex-col">
+                            <div class="flex-1"></div>
+                            <div class="p-2 text-xs text-gray-300 bg-black bg-opacity-30">#000000</div>
+                        </div>
+                        <div class="color-swatch aspect-square rounded-lg shadow-lg bg-gray-700 flex flex-col">
+                            <div class="flex-1"></div>
+                            <div class="p-2 text-xs text-gray-300 bg-black bg-opacity-30">#000000</div>
+                        </div>
+                        <div class="color-swatch aspect-square rounded-lg shadow-lg bg-gray-700 flex flex-col">
+                            <div class="flex-1"></div>
+                            <div class="p-2 text-xs text-gray-300 bg-black bg-opacity-30">#000000</div>
+                        </div>
+                        <div class="color-swatch aspect-square rounded-lg shadow-lg bg-gray-700 flex flex-col">
+                            <div class="flex-1"></div>
+                            <div class="p-2 text-xs text-gray-300 bg-black bg-opacity-30">#000000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Information -->
+            <div class="border-t border-gray-700 pt-6">
+                <h2 class="text-lg font-medium text-white mb-4">Color Information</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- HSL Values -->
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h3 class="text-sm font-medium text-gray-300 mb-2">HSL</h3>
+                        <div id="hslValues" class="text-gray-400 text-sm">
+                            H: 0° S: 0% L: 0%
+                        </div>
+                    </div>
+                    <!-- RGB Values -->
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h3 class="text-sm font-medium text-gray-300 mb-2">RGB</h3>
+                        <div id="rgbValues" class="text-gray-400 text-sm">
+                            R: 0 G: 0 B: 0
+                        </div>
+                    </div>
+                    <!-- CMYK Values -->
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h3 class="text-sm font-medium text-gray-300 mb-2">CMYK</h3>
+                        <div id="cmykValues" class="text-gray-400 text-sm">
+                            C: 0% M: 0% Y: 0% K: 100%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
-<script src="./script.js"></script>    
+
+    <script src="./script.js"></script>
 </body>
 </html>
