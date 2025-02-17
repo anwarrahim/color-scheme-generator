@@ -23,7 +23,8 @@ colorPicker.addEventListener('input', (e) => {
 });
 
 colorHex.addEventListener('input', (e) => {
-    const hex = e.target.value.startsWith('#') ? e.target.value : '#' + e.target.value;
+    let hex = e.target.value.startsWith('#') ? e.target.value : '#' + e.target.value;
+    // Ensure hex is 6 characters long (excluding #)
     if (/^#[0-9A-F]{6}$/i.test(hex)) {
         updateColor(hex);
     }
@@ -31,14 +32,19 @@ colorHex.addEventListener('input', (e) => {
 
 generateBtn.addEventListener('click', generateColorScheme);
 
-// Update color values and display
+// Update color values and display using the Color API
 async function updateColor(hex) {
-    colorPicker.value = hex;
-    colorHex.value = hex;
+    // Remove # if present for API call
+    const cleanHex = hex.replace('#', '');
+    colorPicker.value = '#' + cleanHex;
+    colorHex.value = '#' + cleanHex;
     
     try {
-        // Get color information from the API
-        const response = await fetch(`${colorApiBaseUrl}/id?hex=${hex.replace('#', '')}`);
+        // Using the Color Identification API endpoint
+        const response = await fetch(`${colorApiBaseUrl}/id?hex=${cleanHex}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch color data');
+        }
         const colorData = await response.json();
         
         // Update color information displays
@@ -48,25 +54,35 @@ async function updateColor(hex) {
         generateColorScheme();
     } catch (error) {
         console.error('Error fetching color data:', error);
+        alert('Failed to fetch color information. Please try again.');
     }
 }
 
-// Generate color scheme using the Color API
+// Generate color scheme using the Color API's scheme endpoint
 async function generateColorScheme() {
     const baseColor = colorPicker.value.replace('#', '');
     const mode = schemeType.value;
     const count = 5; // Number of colors in the scheme
 
     try {
+        // Using the Generate Scheme API endpoint
         const response = await fetch(
             `${colorApiBaseUrl}/scheme?hex=${baseColor}&mode=${mode}&count=${count}`
         );
+        if (!response.ok) {
+            throw new Error('Failed to generate color scheme');
+        }
         const schemeData = await response.json();
         
-        // Update color swatches
-        updateColorSwatches(schemeData.colors);
+        // Update color swatches with the generated scheme
+        if (schemeData && schemeData.colors) {
+            updateColorSwatches(schemeData.colors);
+        } else {
+            throw new Error('Invalid color scheme data received');
+        }
     } catch (error) {
         console.error('Error generating color scheme:', error);
+        alert('Failed to generate color scheme. Please try again.');
     }
 }
 
@@ -76,7 +92,10 @@ function updateColorSwatches(colors) {
         if (colors[index]) {
             const hex = colors[index].hex.value;
             swatch.style.backgroundColor = hex;
-            swatch.querySelector('div:last-child').textContent = hex;
+            const hexText = swatch.querySelector('div:last-child');
+            if (hexText) {
+                hexText.textContent = hex;
+            }
             
             // Add click-to-copy functionality
             swatch.onclick = () => {
@@ -88,6 +107,10 @@ function updateColorSwatches(colors) {
                         feedback.className = 'absolute top-0 right-0 bg-black bg-opacity-75 text-white px-2 py-1 text-xs rounded m-2';
                         swatch.appendChild(feedback);
                         setTimeout(() => feedback.remove(), 1000);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy color:', err);
+                        alert('Failed to copy color to clipboard');
                     });
             };
         }
@@ -96,45 +119,28 @@ function updateColorSwatches(colors) {
 
 // Update color information displays
 function updateColorInfo(colorData) {
+    if (!colorData) return;
+
     // Update HSL Values
-    hslValues.textContent = `H: ${colorData.hsl.h}° S: ${colorData.hsl.s}% L: ${colorData.hsl.l}%`;
-    
+    if (colorData.hsl) {
+        const { h, s, l } = colorData.hsl;
+        hslValues.textContent = `H: ${h}° S: ${s} L: ${l}`;
+    }
+
     // Update RGB Values
-    rgbValues.textContent = `R: ${colorData.rgb.r} G: ${colorData.rgb.g} B: ${colorData.rgb.b}`;
-    
-    // Calculate and update CMYK Values
-    const cmyk = rgbToCmyk(
-        colorData.rgb.r,
-        colorData.rgb.g,
-        colorData.rgb.b
-    );
-    cmykValues.textContent = `C: ${cmyk.c}% M: ${cmyk.m}% Y: ${cmyk.y}% K: ${cmyk.k}%`;
+    if (colorData.rgb) {
+        const { r, g, b } = colorData.rgb;
+        rgbValues.textContent = `R: ${r} G: ${g} B: ${b}`;
+        
+        // Calculate and update CMYK Values
+        if (colorData.cmyk) {
+            const { c, m, y, k } = colorData.cmyk;
+            cmykValues.textContent = `C: ${c} M: ${m} Y: ${y} K: ${k}`;
+        }
+    }
 }
 
-// RGB to CMYK conversion
-function rgbToCmyk(r, g, b) {
-    // Convert RGB to 0-1 range
-    const red = r / 255;
-    const green = g / 255;
-    const blue = b / 255;
-
-    // Find K (black)
-    const k = 1 - Math.max(red, green, blue);
-    
-    // Calculate CMY
-    const c = k === 1 ? 0 : Math.round(((1 - red - k) / (1 - k)) * 100);
-    const m = k === 1 ? 0 : Math.round(((1 - green - k) / (1 - k)) * 100);
-    const y = k === 1 ? 0 : Math.round(((1 - blue - k) / (1 - k)) * 100);
-    
-    return {
-        c: c,
-        m: m,
-        y: y,
-        k: Math.round(k * 100)
-    };
-}
-
-// Add custom CSS to make color swatches interactive
+// Add custom CSS for interactive color swatches
 const style = document.createElement('style');
 style.textContent = `
     .color-swatch {
