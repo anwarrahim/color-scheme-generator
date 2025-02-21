@@ -22,9 +22,9 @@
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-300 mb-2">Base Color</label>
                         <div class="flex gap-4">
-                            <input type="color" id="colorPicker"
-                                class="h-12 w-20 bg-transparent rounded cursor-pointer">
-                            <input type="text" id="colorHex"
+                            <input type="color" id="color-picker"
+                                class="h-12 w-20 bg-transparent rounded cursor-pointer border-none" placeholder="">
+                            <input type="text" id="color-hex"
                                 class="flex-1 bg-gray-700 text-white px-4 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 placeholder="#000000">
                         </div>
@@ -33,7 +33,7 @@
                     <!-- Scheme Type Selector -->
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-300 mb-2">Scheme Type</label>
-                        <select id="schemeType"
+                        <select id="scheme-type"
                             class="w-full bg-gray-700 text-white px-4 py-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none">
                             <option value="analogous">Analogous</option>
                             <option value="monochromatic">Monochromatic</option>
@@ -44,7 +44,7 @@
                     </div>
 
                     <!-- Generate Button -->
-                    <button id="generateBtn"
+                    <button id="generate-btn"
                         class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors">
                         Generate Scheme
                     </button>
@@ -85,21 +85,21 @@
                     <!-- HSL Values -->
                     <div class="bg-gray-700 p-4 rounded-lg">
                         <h3 class="text-sm font-medium text-gray-300 mb-2">HSL</h3>
-                        <div id="hslValues" class="text-gray-400 text-sm">
+                        <div id="hsl-values" class="text-gray-400 text-sm">
                             H: 0° S: 0% L: 0%
                         </div>
                     </div>
                     <!-- RGB Values -->
                     <div class="bg-gray-700 p-4 rounded-lg">
                         <h3 class="text-sm font-medium text-gray-300 mb-2">RGB</h3>
-                        <div id="rgbValues" class="text-gray-400 text-sm">
+                        <div id="rgb-values" class="text-gray-400 text-sm">
                             R: 0 G: 0 B: 0
                         </div>
                     </div>
                     <!-- CMYK Values -->
                     <div class="bg-gray-700 p-4 rounded-lg">
                         <h3 class="text-sm font-medium text-gray-300 mb-2">CMYK</h3>
-                        <div id="cmykValues" class="text-gray-400 text-sm">
+                        <div id="cmyk-values" class="text-gray-400 text-sm">
                             C: 0% M: 0% Y: 0% K: 100%
                         </div>
                     </div>
