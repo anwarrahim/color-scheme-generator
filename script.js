@@ -8,13 +8,20 @@ const generateBtn = document.getElementById('generate-btn')
 
 
 
-
+let selectedColor = ''
 // pick color
 colorPicker.addEventListener('change', e=>{
-    const selectedColor = e.target.value
+    selectedColor = e.target.value
     colorHex.value = selectedColor
-
+    getValuefromInput(selectedColor)
 })
 
+console.log(selectedColor)
 
+generateBtn.addEventListener('click', ()=>{
+ 
+   function getValuefromInput(){
+    
+   }
 
+})
